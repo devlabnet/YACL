@@ -18,7 +18,7 @@
 #define YACL_USE_YACLLIB yaclLibSpace::yaclLib* ENGINE;
 #define YACL_CMDS_LIST yaclLibSpace::cmdLineCommand
 #define YACL_INIT_CMDS(s, c) cmdEngine = new yaclLibSpace::yaclLib(s, c, NELEMS(c));
-#define YACL_CHECK_CMDS cmdEngine->checkCommands();
+#define YACL_CHECK_CMDS cmdEngine->checkCommands()
 #define YACL_GETINT ENGINE->readNumber()
 #define YACL_GETLONG ENGINE->readLong()
 #define YACL_GETFLOAT ENGINE->readFloat()
@@ -70,7 +70,7 @@ public:
     float readFloat();
     char* readWord();
     char* token() { return cmdToken; };
-    void checkCommands();
+    bool checkCommands();
     bool readOk() { return ok; }
     virtual void flush() { /* Empty implementation for backward compatibility */ }
 
@@ -87,7 +87,7 @@ private:
     char *cmdToken = "";
     int isNumericString(char *s);
     void nullCommand(char *ptrToCommandName);
-    void DoMyCommand();
+    bool DoMyCommand();
 };
 
 } /* namespace yaclLibSpace */

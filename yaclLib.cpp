@@ -116,28 +116,32 @@ int yaclLib::isNumericString(char *s) {
 /****************************************************
   DoMyCommand
 */
-void yaclLib::DoMyCommand() {
-  if (strlen(commandLine) == 0) return;
-  //print2("\nCommand: ", commandLine);
+bool yaclLib::DoMyCommand() {
+  if (strlen(commandLine) == 0) return false;
   char* ptrToCommandName = strtok(commandLine, delimiters);
   for (int i = 0; i < userFuncSize; ++i) {
     if (strcmp(ptrToCommandName, commands[i].tokens) == 0) {
+	  cmdToken = commands[i].tokens;
       commands[i].userFunc();
       commandLine[0] = NULLCHAR;
-      return;
+      return true;
     }
   }
-  //    cmdToken = "";
+  cmdToken = "";
   nullCommand(ptrToCommandName);
   commandLine[0] = NULLCHAR;
+  return false;
 }
 
 /************************************************/
-void yaclLib::checkCommands() {
+bool yaclLib::checkCommands() {
   // disable all interrupts
   //noInterrupts();
   bool received = getCommandLineFromSerialPort();
-  if (received)	DoMyCommand();
+  if (received)	{
+	  return DoMyCommand();
+  }
+  return false;
   // enable all interrupts
   //interrupts();
 }

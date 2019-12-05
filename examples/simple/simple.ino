@@ -29,8 +29,6 @@ void test() {
     YACL_PRINT(c);
     YACL_PRINT("=");
     YACL_PRINTLN(v);
-    YACL_WRITE(v);
-    YACL_PRINTLN();
 }
 //******************************
 // Add your commands "token" and "function names" here
@@ -48,5 +46,10 @@ void setup() {
 }
 
 void loop() {
-    YACL_CHECK_CMDS;
+    if (YACL_CHECK_CMDS == true) {
+      Serial.println("------------");
+      YACL_PRINTLN(YACL_TOKEN);
+      Serial.println("------------");
+   }
+
 }
